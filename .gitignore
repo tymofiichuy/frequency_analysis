@@ -1,0 +1,4 @@
+.vscode
+*.pdf
+build
+googletest-release-1.10.0

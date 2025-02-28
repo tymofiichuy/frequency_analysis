@@ -15,4 +15,5 @@ set(SOURCES
 
 include_directories(${SOURCE_DIR})
 
-add_executable(prepare ${MAIN_DIR}/prepare.cpp ${SOURCES})
+add_executable(filter ${MAIN_DIR}/prepare.cpp ${SOURCES})
+add_executable(analyse ${MAIN_DIR}/analyzer.cpp ${SOURCES})

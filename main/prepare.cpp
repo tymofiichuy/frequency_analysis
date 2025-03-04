@@ -25,11 +25,11 @@ int main(int argc, char *argv[]){
             case 3:
                 if(strcmp(argv[2], "ws")==0){
                     ws = true;
-                    anl.set_out("filtred_"+string(argv[1]));
+                    anl.set_out("filtered_"+string(argv[1]));
                 }
                 else if(strcmp(argv[2], "nows")==0){
                     ws = false;
-                    anl.set_out("filtred_"+string(argv[1]));
+                    anl.set_out("filtered_"+string(argv[1]));
                 }
                 else{
                     try{

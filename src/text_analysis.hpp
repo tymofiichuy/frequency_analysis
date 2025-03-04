@@ -5,6 +5,7 @@
 #include<cwchar>
 #include<string>
 #include<iomanip>
+#include<cstring>
 
 class analyzer{
 private:
@@ -15,8 +16,8 @@ private:
     float unigrams[33] = {};
     float bigrams[33][33] = {};
     int counter = 0;
-    //hash maps?
-    //33 symbols
+
+    void sort(float* in, int size = 33);
 public:
     analyzer();
     //~analyzer();
@@ -25,6 +26,7 @@ public:
     void set_out(const std::string& out_file);
 
     void write_result();
+    void sort_by(int pos = 0, wchar_t wch = L'');
 
     void prepare_text(bool whitespace = true);
     void process_text();

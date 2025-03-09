@@ -66,65 +66,65 @@ void analyzer::process_text(){
     }
 }
 
-void analyzer::sort(float* in, int size){
-    float temp;
-    int prev;
-    for(int i = 1; i < size; i++){
-        temp = in[i];
-        prev = i-1;
-        while(prev>=0&&temp<in[prev]){
-            in[prev+1]=in[prev];
-            prev--;
-        }
-        in[prev+1]=temp;
-    }
-}
+// void analyzer::sort(float* in, int size){
+//     float temp;
+//     int prev;
+//     for(int i = 1; i < size; i++){
+//         temp = in[i];
+//         prev = i-1;
+//         while(prev>=0&&temp<in[prev]){
+//             in[prev+1]=in[prev];
+//             prev--;
+//         }
+//         in[prev+1]=temp;
+//     }
+// }
 
-void analyzer::sort_by(int pos, wchar_t wch){
-    float temp[33] = {};
-    switch(pos){
-        case 0:
-            if(wch == L''){
-                memcpy(temp, unigrams, sizeof(float)*33);
-                sort(temp);
-                //wcout
-                //letter order
-            }
-            else{
-                throw invalid_argument("Letter sholdn't be set");
-            }
-            break;
-        case 1:
-            if(wch==L' '){
-                wch = 0x450;
-            }
-            wch -= 0x430;
-            if(wch>=0&&wch<=32){
-                memcpy(temp, bigrams[wch], sizeof(float)*33);
-                sort(temp);
-                //wcout
-                //letter order
-            }
-            else{
-                throw invalid_argument("Unsupported letter");
-            }
-            break;
-        case -1:
-            if(wch==L' '){
-                wch = 0x450;
-            }
-            wch -= 0x430;
-            if(wch>=0&&wch<=32){
-                for(int i = 0; i < 33; i++){
-                    temp[i] = bigrams[i][wch];
-                }
-                sort(temp);
-                //wcout
-                //letter order
-            }
-            else{
-                throw invalid_argument("Unsupported letter");
-            }
-            break;
-    }
-}
+// void analyzer::sort_by(int pos, wchar_t wch){
+//     float temp[33] = {};
+//     switch(pos){
+//         case 0:
+//             if(wch == L''){
+//                 memcpy(temp, unigrams, sizeof(float)*33);
+//                 sort(temp);
+//                 //wcout
+//                 //letter order
+//             }
+//             else{
+//                 throw invalid_argument("Letter sholdn't be set");
+//             }
+//             break;
+//         case 1:
+//             if(wch==L' '){
+//                 wch = 0x450;
+//             }
+//             wch -= 0x430;
+//             if(wch>=0&&wch<=32){
+//                 memcpy(temp, bigrams[wch], sizeof(float)*33);
+//                 sort(temp);
+//                 //wcout
+//                 //letter order
+//             }
+//             else{
+//                 throw invalid_argument("Unsupported letter");
+//             }
+//             break;
+//         case -1:
+//             if(wch==L' '){
+//                 wch = 0x450;
+//             }
+//             wch -= 0x430;
+//             if(wch>=0&&wch<=32){
+//                 for(int i = 0; i < 33; i++){
+//                     temp[i] = bigrams[i][wch];
+//                 }
+//                 sort(temp);
+//                 //wcout
+//                 //letter order
+//             }
+//             else{
+//                 throw invalid_argument("Unsupported letter");
+//             }
+//             break;
+//     }
+// }

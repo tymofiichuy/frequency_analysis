@@ -8,23 +8,27 @@ analyzer::analyzer(){
 }
 
 void analyzer::set_in(const string& in_file){
-    instr.close();
-    instr.clear();
     instr.open(in_file, ios_base::in);
-
     if(!instr){
         throw runtime_error("Unable to open input file");
     }
 }
 
-void analyzer::set_out(const string& out_file){
-    outstr.close();
-    outstr.clear();
-    outstr.open(out_file, ios_base::out);
+void analyzer::reset_in(){
+    instr.close();
+    instr.clear();
+}
 
+void analyzer::set_out(const string& out_file){
+    outstr.open(out_file, ios_base::out);
     if(!instr){
         throw runtime_error("Unable to open output file");
     }
+}
+
+void analyzer::reset_out(){
+    outstr.close();
+    outstr.clear();
 }
 
 void analyzer::prepare_text(bool whitespace){

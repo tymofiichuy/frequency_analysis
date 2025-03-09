@@ -1,39 +1,40 @@
-#include "text_analysis.hpp"
+#include"text_analysis.hpp"
 
 using namespace std;
 
-int main(int argc, char *argv[]){
+int main(){
+    cli main_cli;
     analyzer anl;
-    if(argc<2||argc>3){
-        cerr << "Unsupported argument\n";
-        return 1;
-    }
-    else{
-        switch(argc){
-            case 2:
+
+    string in = "";
+    vector<token> tokens;
+
+    bool parse = true;
+
+    while (true){
+        getline(cin, in);
+        if(in == "STOP"){
+            break;
+        }
+        else{
+            try{
+                tokens = main_cli.tokenize(in);
+                main_cli.parse(tokens);
+                parse = true;
+            }
+            catch(invalid_argument error){
+                parse = false;
+                cout << error.what() << "\n";
+            }
+            if(parse){
                 try{
-                    anl.set_in(argv[1]);
+                    main_cli.execute(tokens, anl);
                 }
-                catch(runtime_error er){
-                    cerr << er.what();
-                    return 1;
+                catch(invalid_argument error){
+                    cout << error.what() << "\n";
                 }
-                anl.set_out("frequency_"+string(argv[1]));
-                break;
-            case 3:
-                try{
-                    anl.set_in(argv[1]);
-                    anl.set_out(argv[2]);
-                }
-                catch(runtime_error er){
-                    cerr << er.what();
-                    return 1;
-                }
-                break;
+            }            
         }
     }
-
-    anl.process_text();
-    anl.write_result();
     return 0;
 }

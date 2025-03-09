@@ -11,9 +11,9 @@ set(MAIN_DIR ${CMAKE_SOURCE_DIR}/main)
 set(SOURCES
     ${SOURCE_DIR}/prepare_text.cpp
     ${SOURCE_DIR}/process_text.cpp
+    ${SOURCE_DIR}/cli.cpp
 )
 
 include_directories(${SOURCE_DIR})
 
-add_executable(filter ${MAIN_DIR}/prepare.cpp ${SOURCES})
 add_executable(analyse ${MAIN_DIR}/analyzer.cpp ${SOURCES})

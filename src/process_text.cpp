@@ -74,7 +74,7 @@ void analyzer::sort(float* in, int* ind, int size){
         temp = in[i];
         index = ind[i];
         prev = i-1;
-        while(prev>=0&&temp<in[prev]){
+        while(prev>=0&&temp>in[prev]){
             in[prev+1]=in[prev];
             ind[prev+1] = ind[prev];
             prev--;
@@ -86,13 +86,13 @@ void analyzer::sort(float* in, int* ind, int size){
 
 void analyzer::sort_by(int pos, wchar_t wch){
     float temp[33] = {};
+    for(int i = 0; i < 33; i++){
+        index[i] = i;
+    }
     switch(pos){
         case 0:
             if(wch == L'\0'){
                 memcpy(temp, unigrams, sizeof(float)*33);
-                for(int i = 0; i < 33; i++){
-                    index[i] = i;
-                }
                 sort(temp, index, 33);
                 memcpy(unigrams, temp, sizeof(float)*33);
             }
@@ -107,9 +107,8 @@ void analyzer::sort_by(int pos, wchar_t wch){
             wch -= 0x430;
             if(wch>=0&&wch<=32){
                 memcpy(temp, bigrams[wch], sizeof(float)*33);
-                sort(temp);
-                //wcout
-                //letter order
+                /*sort(temp, index, 33);
+                memcpy(bigrams[wch], temp, sizeof(float)*33);*/
             }
             else{
                 throw invalid_argument("Unsupported letter");
@@ -124,9 +123,11 @@ void analyzer::sort_by(int pos, wchar_t wch){
                 for(int i = 0; i < 33; i++){
                     temp[i] = bigrams[i][wch];
                 }
-                sort(temp);
-                //wcout
-                //letter order
+                //sort(temp, index, 33);
+                /*for(int i = 0; i < 33; i++) {
+                    bigrams[i][wch] = temp[i];
+                }*/
+
             }
             else{
                 throw invalid_argument("Unsupported letter");

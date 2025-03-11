@@ -16,6 +16,7 @@ private:
 
     float unigrams[33] = {};
     float bigrams[33][33] = {};
+    int index[33] = {};
     int counter = 0;
 
     //void sort(float* in, int size = 33);
@@ -29,6 +30,7 @@ public:
     void reset_out();
 
     void write_result();
+    void sort_by(int pos = 0, wchar_t wch = L'\0');
     //void sort_by(int pos = 0, wchar_t wch = L'');
 
     void prepare_text(bool whitespace = true);

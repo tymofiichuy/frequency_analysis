@@ -93,7 +93,7 @@ void analyzer::sort_by(int pos, wchar_t wch){
         case 0:
             if(wch == L'\0'){
                 memcpy(temp, unigrams, sizeof(float)*33);
-                sort(temp, index, 33);
+                sort(temp, index);
                 memcpy(unigrams, temp, sizeof(float)*33);
             }
             else{
@@ -107,7 +107,7 @@ void analyzer::sort_by(int pos, wchar_t wch){
             wch -= 0x430;
             if(wch>=0&&wch<=32){
                 memcpy(temp, bigrams[wch], sizeof(float)*33);
-                /*sort(temp, index, 33);
+                /*sort(temp, index);
                 memcpy(bigrams[wch], temp, sizeof(float)*33);*/
             }
             else{
@@ -123,7 +123,7 @@ void analyzer::sort_by(int pos, wchar_t wch){
                 for(int i = 0; i < 33; i++){
                     temp[i] = bigrams[i][wch];
                 }
-                //sort(temp, index, 33);
+                //sort(temp, index);
                 /*for(int i = 0; i < 33; i++) {
                     bigrams[i][wch] = temp[i];
                 }*/

@@ -18,8 +18,8 @@ private:
     float bigrams[33][33] = {};
     int index[33] = {};
     int counter = 0;
-
-    //void sort(float* in, int size = 33);
+    
+    void sort(float* in, int* ind, int size = 33);
 public:
     analyzer();
     //~analyzer();

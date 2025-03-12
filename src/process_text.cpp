@@ -1,4 +1,5 @@
 #include "text_analysis.hpp"
+#include <cmath>
 
 using namespace std;
 
@@ -134,4 +135,33 @@ void analyzer::sort_by(int pos, wchar_t wch){
             }
             break;
     }
+}
+
+float analyzer::entropy_unigrams() {
+    float hu = 0;
+    for (int i = 0; i<33; i++) {
+        if (unigrams[i]>0) {
+            hu += unigrams[i]*log(unigrams[i]);
+        }
+    }
+    hu = -hu;
+    return hu;
+}
+
+float analyzer::entropy_bigrams() {
+    float hb = 0;
+    for (int i = 0; i<33; i++) {
+        for (int j = 0; j<33; j++) {
+            if (bigrams[i][j]>0) {
+                hb += bigrams[i][j]*log(bigrams[i][j]);
+            }
+        }
+    }
+    hb = -hb;
+    return hb;
+}
+
+void analyzer::entropy() {
+    float hu = entropy_unigrams();
+    float hb = entropy_bigrams();
 }

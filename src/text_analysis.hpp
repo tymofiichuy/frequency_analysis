@@ -37,6 +37,9 @@ public:
     void process_text();
 
     //entropy
+    void entropy();
+    float entropy_unigrams();
+    float entropy_bigrams();
 };
 
 struct token{

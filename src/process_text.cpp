@@ -6,23 +6,21 @@ using namespace std;
 void analyzer::write_result(){
     outstr << fixed << setprecision(5);
     outstr << "   ";
-    for(int i = 0; i < 34; i++){
-        if(i<33){
+    for(int i = 0; i < 33; i++){
+        if(index[i]<32){
             outstr << static_cast<wchar_t>(0x430+index[i]) << "       ";
         }
         else{
-            outstr << "ws       ";
-        }
+            outstr << "ws      ";
+        }    
+    }
     outstr << "\n   ";
-        
-    }    
     for(int i = 0; i < 33; i++){
         outstr << unigrams[i] << ' ';
     }
-    outstr << "\n\n";
-    outstr << "    ";
+    outstr << "\n\n\n\n   ";
     for(int i = 0; i < 32; i++){
-        outstr << static_cast<wchar_t>(0x430+index[i]) << "  ";
+        outstr << static_cast<wchar_t>(0x430+i) << "       ";
     }
     outstr << "ws\n";
     for(int i = 0; i < 33; i++){
@@ -77,6 +75,17 @@ void analyzer::process_text(){
     }
 }
 
+void analyzer::reset_frequency(){
+    for(int i = 0; i < 33; i++){
+        index[i] = i;
+    }
+    
+    fill(begin(unigrams), end(unigrams), 0);
+    for(int i = 0; i < 33; i++){
+        fill(begin(bigrams[i]), end(bigrams[i]), 0);
+    }
+}
+
 void analyzer::sort(float* in, int* ind, int size){
     float temp;
     int index;
@@ -97,9 +106,9 @@ void analyzer::sort(float* in, int* ind, int size){
 
 void analyzer::sort_by(int pos, wchar_t wch){
     float temp[33] = {};
-    for(int i = 0; i < 33; i++){
-        index[i] = i;
-    }
+    // for(int i = 0; i < 33; i++){
+    //     index[i] = i;
+    // }
     switch(pos){
         case 0:
             if(wch == L'\0'){

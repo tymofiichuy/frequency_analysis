@@ -31,10 +31,10 @@ public:
 
     void write_result();
     void sort_by(int pos = 0, wchar_t wch = L'\0');
-    //void sort_by(int pos = 0, wchar_t wch = L'');
 
     void prepare_text(bool whitespace = true);
     void process_text();
+    void reset_frequency();
 
     //entropy
     void entropy();
@@ -64,40 +64,35 @@ struct token{
 // 9 - ENTROPY
 //
 // 10 - SORT
-// 11 - SORT BY
-// 12 - SORT BY position
-// 13 - SORT BY position char
+// 11 - SORT to_file
 
 // in:
 // 0 - PREPARE
 // 1 - PROCESS
 // 2 - ENTROPY
 // 3 - SORT
-// 4 - BY
-// 5 - WS
-// 6 - NOWS
-// 7 - name
+// 4 - WS
+// 5 - NOWS
+// 6 - name
 
 class cli{
 private:
     std::string in_file, out_file;
     int state = 0;
-    int program[14][8] = {{1, 6, 9, 10, -1, -1, -1, -1}/*NULL*/,
-                          {-1, -1, -1, -1, -1, -1, -1, 2}/*PREPARE*/,
-                          {-1, -1, -1, -1, -1, -1, -1, 3}/*PREPARE from_file*/,
-                          {-1, -1, -1, -1, -1, 4, 5, -1}/*PREPARE from_file to_file*/,
-                          {-1, -1, -1, -1, -1, -1, -1, -1}/*PREPARE from_file to_file WS*/,
-                          {-1, -1, -1, -1, -1, -1, -1, -1}/*PREPARE from_file to_file NOWS*/,
-                          {-1, -1, -1, -1, -1, -1, -1, 7}/*PROCESS*/,
-                          {-1, -1, -1, -1, -1, -1, -1, 8}/*PROCESS from_file*/,
-                          {-1, -1, -1, -1, -1, -1, -1, -1}/*PROCESS from_file to_file*/,
-                          {-1, -1, -1, -1, -1, -1, -1, -1}/*ENTROPY*/,
-                          {-1, -1, -1, -1, 11, -1, -1, -1}/*SORT*/,
-                          {-1, -1, -1, -1, -1, -1, -1, 12}/*SORT BY*/,
-                          {-1, -1, -1, -1, -1, -1, -1, 13}/*SORT BY position*/,
-                          {-1, -1, -1, -1, -1, -1, -1, -1}/*SORT BY position char*/
+    int program[12][7] = {{1, 6, 9, 10, -1, -1, -1}/*NULL*/,
+                          {-1, -1, -1, -1, -1, -1, 2}/*PREPARE*/,
+                          {-1, -1, -1, -1, -1, -1, 3}/*PREPARE from_file*/,
+                          {-1, -1, -1, -1, 4, 5, -1}/*PREPARE from_file to_file*/,
+                          {-1, -1, -1, -1, -1, -1, -1}/*PREPARE from_file to_file WS*/,
+                          {-1, -1, -1, -1, -1, -1, -1}/*PREPARE from_file to_file NOWS*/,
+                          {-1, -1, -1, -1, -1, -1, 7}/*PROCESS*/,
+                          {-1, -1, -1, -1, -1, -1, 8}/*PROCESS from_file*/,
+                          {-1, -1, -1, -1, -1, -1, -1}/*PROCESS from_file to_file*/,
+                          {-1, -1, -1, -1, -1, -1, -1}/*ENTROPY*/,
+                          {-1, -1, -1, -1, -1, -1, 11}/*SORT*/,
+                          {-1, -1, -1, -1, -1, -1, -1}/*SORT to_file*/
                          };
-    int terminal[6] = {4, 5, 8, 9, 10, 13};
+    int terminal[5] = {4, 5, 8, 9, 11};
 public:
     void reset_state();
     std::vector<token> tokenize(std::string& in);

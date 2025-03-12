@@ -1,5 +1,6 @@
 #include "text_analysis.hpp"
 #include<sstream>
+#include<chrono>
 
 using namespace std;
 
@@ -34,23 +35,18 @@ vector<token> cli::tokenize(string& in){
                 tk.word = word;
                 out.push_back(tk);
             }
-            else if(word == "BY"){
+            else if(word == "WS"){
                 tk.num = 4;
                 tk.word = word;
                 out.push_back(tk);
             }
-            else if(word == "WS"){
+            else if(word == "NOWS"){
                 tk.num = 5;
                 tk.word = word;
                 out.push_back(tk);
             }
-            else if(word == "NOWS"){
-                tk.num = 6;
-                tk.word = word;
-                out.push_back(tk);
-            }
             else{
-                tk.num = 7;
+                tk.num = 6;
                 tk.word = word;
                 out.push_back(tk);
             }
@@ -67,7 +63,7 @@ void cli::parse(vector<token>& in){
             throw invalid_argument("Unable to parse");
         }
     }
-    for(int j = 0; j < 4; j++){
+    for(int j = 0; j < 5; j++){
         if(state == terminal[j]){
             return;
         }
@@ -76,41 +72,62 @@ void cli::parse(vector<token>& in){
 }
 
 void cli::execute(std::vector<token>& in, analyzer& anl){
+    chrono::steady_clock::time_point start;
+    chrono::steady_clock::time_point end;
+    streamsize ss = std::cout.precision();
+
     switch(state){
     case 4:
         anl.set_in(in[1].word);
         anl.set_out(in[2].word);
+
+        start = chrono::high_resolution_clock::now();
         anl.prepare_text(true);
-        cout << "DONE\n";
+        end = chrono::high_resolution_clock::now();
+        cout << "DONE in: " << chrono::duration_cast<chrono::milliseconds>(end-start).count() << "ms\n";
+
         anl.reset_in();
         anl.reset_out();           
         break;
     case 5:
         anl.set_in(in[1].word);
         anl.set_out(in[2].word);
+
+        start = chrono::high_resolution_clock::now();
         anl.prepare_text(false);
-        cout << "DONE\n";
+        end = chrono::high_resolution_clock::now();
+        cout << "DONE in: " << chrono::duration_cast<chrono::milliseconds>(end-start).count() << "ms\n";
+
         anl.reset_in();
         anl.reset_out();          
         break;
     case 8:
         anl.set_in(in[1].word);
         anl.set_out(in[2].word);
-        anl.process_text();      
+        anl.reset_frequency();
+
+        start = chrono::high_resolution_clock::now();
+        anl.process_text(); 
+        end = chrono::high_resolution_clock::now();           
         anl.write_result();
-        cout << "DONE\n";
+        cout << "DONE in: " << chrono::duration_cast<chrono::milliseconds>(end-start).count() << "ms\n";
+
         anl.reset_in();
         anl.reset_out();        
         break;
     case 9:
-        //cout entropy
+        cout << fixed << setprecision(5);
+        cout << "Unigram entropy: " << anl.entropy_unigrams() << endl
+        << "Bigram entropy: " << anl.entropy_bigrams() << endl;
+        cout << defaultfloat << setprecision(ss);
         break;
-    case 10:
-        //anl.sort_by();
-        break;
-    case 13:
-        //check input
-        //anl.sort_by(stoi(in[3].word), )
+    case 11:
+        anl.set_out(in[1].word);
+
+        anl.sort_by();
+        anl.write_result();
+
+        anl.reset_out();
         break;
     }
 }

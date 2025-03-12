@@ -171,7 +171,42 @@ float analyzer::entropy_bigrams() {
     return hb;
 }
 
+float analyzer::entropy_unigrams_wc() {
+    float hu = 0;
+    float huw = 0;
+    int n = 0;
+    for (int i = 0; i<33; i++) {
+        if ((unigrams[i]>0)) {
+            hu += unigrams[i]*log(unigrams[i]);
+        }
+    }
+    for (int j = 0; j < 33; j++) {
+        if (index[j] == 33) {
+            n = j;
+            break;
+        }
+    }
+    huw = hu - unigrams[n]*log(unigrams[n]);
+    huw = -huw;
+    return huw;
+}
+
+float analyzer::entropy_bigrams_wc() {
+    float hbw = 0;
+    for (int i = 0; i<32; i++) {
+        for (int j = 0; j<32; j++) {
+            if (bigrams[i][j]>0) {
+                hbw += bigrams[i][j]*log(bigrams[i][j]);
+            }
+        }
+    }
+    hbw = -hbw;
+    return hbw;
+}
+
 void analyzer::entropy() {
     float hu = entropy_unigrams();
     float hb = entropy_bigrams();
+    float huw = entropy_unigrams_wc();
+    float hbw = entropy_bigrams_wc();
 }

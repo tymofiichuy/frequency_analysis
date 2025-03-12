@@ -40,6 +40,8 @@ public:
     void entropy();
     float entropy_unigrams();
     float entropy_bigrams();
+    float entropy_unigrams_wc();
+    float entropy_bigrams_wc();
 };
 
 struct token{

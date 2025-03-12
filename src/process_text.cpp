@@ -20,6 +20,11 @@ void analyzer::write_result(){
         outstr << unigrams[i] << ' ';
     }
     outstr << "\n\n";
+    outstr << "    ";
+    for(int i = 0; i < 32; i++){
+        outstr << static_cast<wchar_t>(0x430+index[i]) << "  ";
+    }
+    outstr << "ws\n";
     for(int i = 0; i < 33; i++){
         if(i!=32){
             outstr << static_cast<wchar_t>(0x430+i) << "  ";  

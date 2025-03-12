@@ -6,11 +6,16 @@ using namespace std;
 void analyzer::write_result(){
     outstr << fixed << setprecision(5);
     outstr << "   ";
-    for(int i = 0; i < 32; i++){
-        outstr << static_cast<wchar_t>(0x430+index[i]) << "       ";
-    }
-    outstr << "ws\n   ";
-
+    for(int i = 0; i < 34; i++){
+        if(i<33){
+            outstr << static_cast<wchar_t>(0x430+index[i]) << "       ";
+        }
+        else{
+            outstr << "ws       ";
+        }
+    outstr << "\n   ";
+        
+    }    
     for(int i = 0; i < 33; i++){
         outstr << unigrams[i] << ' ';
     }

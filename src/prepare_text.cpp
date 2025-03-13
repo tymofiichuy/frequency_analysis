@@ -11,6 +11,10 @@ void analyzer::set_intersection(bool in){
     intersection = in;
 }
 
+void analyzer::set_frequency(float* in){
+    memcpy(unigrams, in, sizeof(float)*33);
+}
+
 void analyzer::set_in(const string& in_file){
     instr.open(in_file, ios_base::in);
     if(!instr){

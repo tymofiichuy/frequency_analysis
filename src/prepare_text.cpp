@@ -7,6 +7,10 @@ analyzer::analyzer(){
     outstr.imbue(locale("en_US.UTF-8"));
 }
 
+void analyzer::set_intersection(bool in){
+    intersection = in;
+}
+
 void analyzer::set_in(const string& in_file){
     instr.open(in_file, ios_base::in);
     if(!instr){

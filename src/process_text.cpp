@@ -40,6 +40,7 @@ void analyzer::write_result(){
 
 void analyzer::process_text(){
     wchar_t curr, prev;
+    bool pair = true;
     while(true){
         instr.read(&curr, 1);
         if(curr != L'\n'){
@@ -62,24 +63,43 @@ void analyzer::process_text(){
             }
             counter++;
             unigrams[curr-0x430]++;
-            bigrams[prev-0x430][curr-0x430]++;
+            if(intersection){
+                bigrams[prev-0x430][curr-0x430]++;
+            }
+            else{
+                if(pair){
+                    bigrams[prev-0x430][curr-0x430]++;
+                    pair = false;
+                }
+                else{
+                    pair = true;
+                }
+            }
             prev = curr;            
         }
     }
     
     for(int i = 0; i < 33; i++){
         unigrams[i] /= counter;
-        for(int j = 0; j < 33; j++){
-            bigrams[i][j] /= counter-1;
+        if(intersection){
+            for(int j = 0; j < 33; j++){
+                bigrams[i][j] /= counter-1;
+            }            
+        }
+        else{
+            for(int j = 0; j < 33; j++){
+                bigrams[i][j] /= (counter/2);
+            }     
         }
     }
 }
 
 void analyzer::reset_frequency(){
+    counter = 0;
     for(int i = 0; i < 33; i++){
         index[i] = i;
     }
-    
+
     fill(begin(unigrams), end(unigrams), 0);
     for(int i = 0; i < 33; i++){
         fill(begin(bigrams[i]), end(bigrams[i]), 0);

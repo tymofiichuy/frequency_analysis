@@ -35,18 +35,33 @@ vector<token> cli::tokenize(string& in){
                 tk.word = word;
                 out.push_back(tk);
             }
-            else if(word == "WS"){
+            else if(word == "INTERSECTION"){
                 tk.num = 4;
                 tk.word = word;
                 out.push_back(tk);
             }
-            else if(word == "NOWS"){
+            else if(word == "TRUE"){
                 tk.num = 5;
                 tk.word = word;
                 out.push_back(tk);
             }
-            else{
+            else if(word == "FALSE"){
                 tk.num = 6;
+                tk.word = word;
+                out.push_back(tk);
+            }
+            else if(word == "WS"){
+                tk.num = 7;
+                tk.word = word;
+                out.push_back(tk);
+            }
+            else if(word == "NOWS"){
+                tk.num = 8;
+                tk.word = word;
+                out.push_back(tk);
+            }
+            else{
+                tk.num = 9;
                 tk.word = word;
                 out.push_back(tk);
             }
@@ -63,7 +78,7 @@ void cli::parse(vector<token>& in){
             throw invalid_argument("Unable to parse");
         }
     }
-    for(int j = 0; j < 5; j++){
+    for(int j = 0; j < 7; j++){
         if(state == terminal[j]){
             return;
         }
@@ -128,6 +143,12 @@ void cli::execute(std::vector<token>& in, analyzer& anl){
         anl.write_result();
 
         anl.reset_out();
+        break;
+    case 13:
+        anl.set_intersection(true);
+        break;
+    case 14:
+        anl.set_intersection(false);
         break;
     }
 }

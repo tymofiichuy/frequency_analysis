@@ -180,7 +180,7 @@ float analyzer::entropy_unigrams() {
     float hu = 0;
     for (int i = 0; i<33; i++) {
         if (unigrams[i]>0) {
-            hu += unigrams[i]*log(unigrams[i]);
+            hu += unigrams[i]*log2f(unigrams[i]);
         }
     }
     hu = -hu;
@@ -192,11 +192,11 @@ float analyzer::entropy_bigrams() {
     for (int i = 0; i<33; i++) {
         for (int j = 0; j<33; j++) {
             if (bigrams[i][j]>0) {
-                hb += bigrams[i][j]*log(bigrams[i][j]);
+                hb += bigrams[i][j]*log2f(bigrams[i][j]);
             }
         }
     }
-    hb = -hb;
+    hb = -hb/2;
     return hb;
 }
 
